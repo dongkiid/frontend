@@ -1,11 +1,17 @@
 import './App.css';
 import { Route, Routes } from 'react-router-dom';
+import Main from "./pages/Main";
+import Diary from "./pages/Todo";
 
 function App() {
   return (
-  
+
     <div>
-      Hi We Are PetGoorm Crew!
+      <Routes>
+        <Route path="/" element={<Main/>} />
+        <Route path="/todo" element={<Diary/>}/>
+
+      </Routes>
     </div>
     
   );

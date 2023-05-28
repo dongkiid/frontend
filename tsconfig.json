@@ -1,0 +1,75 @@
+{
+    "compilerOptions": {
+      "target": "es5",
+      "lib": [
+        "dom",
+        "dom.iterable",
+        "es5"
+      ],
+      "typeRoots": [
+        "./node_modules/@types",
+        "./src/types"
+      ],
+      "baseUrl": "src",
+      // js 파일 아웃풋 경로
+      "outDir": "./dist",
+      // src 절대 경로
+      "paths": {
+        "@/*": [
+          "src/*"
+        ]
+      },
+      "jsx": "react-jsx",
+      // import 문법 종류 : "commonjs", "amd", "es2015", "esnext'
+      "module": "esnext",
+      // ts 파일에서 js 파일 import 허용 여부
+      "allowJs": true,
+      // js 파일에서 에러 체크 여부
+      "checkJs": false,
+      // 컴파일 시 .d.ts 파일도 자동으로 함께 생성 (현재 쓰는 모든 타입이 정의된 파일)
+      "declaration": true,
+      // 컴파일 시 주석 제거
+      "removeComments": true,
+      "moduleResolution": "node",
+      "pretty": true,
+      "noEmit": false,
+      "sourceMap": true,
+      "esModuleInterop": true,
+      "forceConsistentCasingInFileNames": true,
+      "allowSyntheticDefaultImports": true,
+      "experimentalDecorators": true,
+      "emitDecoratorMetadata": true,
+      "skipLibCheck": true,
+      "strict": true,
+      "resolveJsonModule": true,
+      "isolatedModules": true,
+      // any 타입 금지 여부
+      "noImplicitAny": false,
+      // null, undefined 타입을 조작하려고 할 때, 에러 발생
+      "strictNullChecks": false,
+      // class constructor 작성 시 타입 체크 강하게
+      "strictPropertyInitialization": false,
+      // 함수 파라미터 타입 체크 강하게
+      "strictFunctionTypes": true,
+      // 자바스크립트 "use strict" 모드 켜기
+      "alwaysStrict": true,
+      // 사용하지 않는 지역변수 있으면 에러 발생
+      "noUnusedLocals": false,
+      // 사용하지 않는 파라미터 있으면 에러 발생
+      "noUnusedParameters": false,
+      // this 키워드가 any 타입일 경우 에러 발생
+      "noImplicitThis": true,
+      // 함수에서 return 생략 시 에러 발생
+      "noImplicitReturns": true,
+      // switch 문이 잘못된 경우 에러 발생
+      "noFallthroughCasesInSwitch": true
+    },
+    "include": [
+      "src"
+    ],
+    "exclude": [
+      "node_modules",
+      "tests",
+      "dist"
+    ]
+  }
