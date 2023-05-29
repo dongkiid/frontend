@@ -20,11 +20,19 @@ const pages = [
     {text: '우리동네', href: '/board'}
 ]
 
-const settings = ['마이 페이지', '펫 등록', '로그인'];
-
-function Header() {
+function Header({isLoggedIn}) {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+
+
+  const settings = isLoggedIn
+  ? [
+      { label: "마이 페이지", href: "/my-page" },
+      { label: "펫 등록", href: "/pet-registration" },
+      { label: "로그아웃", href: "/member/logout" }
+    ]
+  : [{ label: "로그인", href: "/member/login" }];
+
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -165,8 +173,8 @@ function Header() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                <MenuItem key={setting.label} component={Link} to={setting.href} onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center">{setting.label}</Typography>
                 </MenuItem>
               ))}
             </Menu>
