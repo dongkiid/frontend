@@ -20,9 +20,9 @@ const pages = [
     {text: '우리동네', href: '/board'}
 ]
 
-const settings = ['마이 페이지', '펫 등록', '로그아웃'];
+const settings = ['마이 페이지', '펫 등록', '로그인'];
 
-function ResponsiveAppBar() {
+function Header() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
@@ -178,4 +178,4 @@ function ResponsiveAppBar() {
   );
 }
 
-export default ResponsiveAppBar;
+export default Header;
