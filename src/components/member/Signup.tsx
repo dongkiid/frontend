@@ -229,7 +229,7 @@ const Signup = () => {
 export default Signup;
 
 
-const ErrorMessage = ({ error }) => (
+export const ErrorMessage = ({ error }) => (
     error && (
       <div>
         <span>
