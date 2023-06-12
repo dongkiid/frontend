@@ -8,6 +8,7 @@ import LoginPage from 'pages/LoginPage';
 import Cookies from 'js-cookie';
 import {useState, useEffect} from 'react';
 import Logout from 'components/member/Logout';
+import PetFormPage from 'pages/PetFormPage';
 function App() {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -30,6 +31,7 @@ function App() {
         <Route path='/member/signup' element={<SignUpPage/>}/>
         <Route path='/member/login' element={<LoginPage/>}/>
         <Route path='/member/logout' element={<Logout/>}/>
+        <Route path='/pet/petform' element={<PetFormPage/>}/>
       </Routes>
     </div>
     
