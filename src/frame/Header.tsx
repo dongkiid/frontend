@@ -14,6 +14,8 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import {Link} from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import {useEffect} from 'react';
+import api from 'lib/api';
 
 const pages = [
     {text: '반려일지', href: '/todo'},
@@ -23,15 +25,33 @@ const pages = [
 function Header({isLoggedIn}) {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+  const [petImg, setPetImg] = React.useState<string | null>(null);
+
+  useEffect(()=>{
+    handlePetUrl()
+  },[petImg])
+  
+  //헤더 아바타에 들어갈 펫 이미지 
+  const handlePetUrl = () => {
+    api.get("pet/petinfo")
+    .then((res)=>{
+      console.log("res.data "+res.data.data.petUrl)
+      setPetImg(res.data.data.petUrl);
+    }).catch((error)=>{
+      console.log(error.message)
+    })
+  }
 
 
   const settings = isLoggedIn
   ? [
       { label: "마이 페이지", href: "/my-page" },
-      { label: "펫 등록", href: "/pet-registration" },
+      { label: "펫 등록", href: "/pet/petform" },
       { label: "로그아웃", href: "/member/logout" }
     ]
-  : [{ label: "로그인", href: "/member/login" }];
+  : [{ label: "로그인", href: "/member/login" },
+    { label: "회원가입", href: "/member/signup" }
+];
 
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -153,7 +173,7 @@ function Header({isLoggedIn}) {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar alt="Remy Sharp" src={petImg}/>
               </IconButton>
             </Tooltip>
             <Menu
