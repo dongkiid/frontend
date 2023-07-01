@@ -1,13 +1,7 @@
-import * as React from 'react';
+import TodoList from 'components/todo/Todolist';
 
-const MainPage: React.FC = () => {
-  return (
-    <div>
-      <main>
-        <h2>TODO</h2>
-      </main>
-    </div>
-  );
-};
-
-export default MainPage;
+export default function Todo(){
+    return(
+        <TodoList/>
+    )
+}
