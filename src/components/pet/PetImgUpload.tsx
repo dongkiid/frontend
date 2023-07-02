@@ -6,11 +6,11 @@ interface PetImgUploadProps {
     setImageFile: (file: File | null) => void;
     setFilename: (filename: string | null) => void;
     setFileType: (filename: string | null) => void;
-
+    nowProfile: string | null
   }
   
 
-export default function PetImgUpload({ setImageFile, setFilename, setFileType }: PetImgUploadProps) {
+export default function PetImgUpload({ setImageFile, setFilename, setFileType, nowProfile }: PetImgUploadProps) {
 
     const [imagePreview, setImagePreview] = useState<string>("");
 
@@ -30,8 +30,8 @@ export default function PetImgUpload({ setImageFile, setFilename, setFileType }:
             <label>프로필 이미지 추가</label>
             <input type="file" id="profileImg" 
                 accept=".jpg, .png, .jpeg, .JPG, .PNG, .JPEG" onChange={onUpload}/>
-            {imagePreview ? <ThumbnailContainer><PreviewPet src={imagePreview} /></ThumbnailContainer> : <div />}
-
+            {nowProfile ||imagePreview ? <ThumbnailContainer><PreviewPet src={imagePreview? imagePreview: nowProfile} /></ThumbnailContainer> : <div />}
+            
         </div>
     )
 
