@@ -103,7 +103,7 @@ export const PetEdit = () => {
         {petData ?
             <div className="petform">
                 <form onSubmit={handleSubmit(handleFormSubmit)} className="PetForm">
-                    <h1>펫 등록</h1><br />
+                    <h1>펫 수정</h1><br />
                     <PetImgUpload setImageFile={setImageFile} setFilename={setFileName} setFileType={setFileType} nowProfile={petData.petUrl}/>
                     펫 이름 :
                     <input type="text" defaultValue ={petData.petname}
@@ -176,7 +176,7 @@ export const PetEdit = () => {
 
                     )}<br />
                     <p>
-                        <button type="submit" >펫 등록</button>
+                        <button type="submit" >펫 수정</button>
                     </p><br />
 
                 </form>
