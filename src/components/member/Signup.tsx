@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import ReactDaumPost from 'react-daumpost-hook';
 import api from "lib/api";
+import useNicknameChecker from "lib/useNicknameChecker";
 
 interface FormData {
   email: string;
@@ -26,6 +27,18 @@ const Signup = () => {
     isAvailedEmail: false,
     isAvailedNickname: false
   });
+
+    //양방향 바운딩을 위해 usestate로 닉넴 중복체크(한글만 마지막 글자 잘리는 오류 발생)
+    const [inputNick, setInputNick] = useState('');
+
+    const handleNickChange = (e) => {
+      setInputNick(e.target.value);
+    };
+
+
+  //닉네임 중복확인 커스텀 훅 사용
+  const { checkNickname, checkNick } = useNicknameChecker(inputNick);
+
 
   const handleFormSubmit = (data: FormData) => {
     if (checkTF.isAvailedEmail === true && checkTF.isAvailedNickname === true) {
@@ -65,26 +78,6 @@ const Signup = () => {
     }
   };
 
-  const checkNickname = () => {
-    const nickname = (document.getElementById("nickname") as HTMLInputElement)?.value;
-    if (nickname && nickname.length > 0) {
-        api.get(`member/checkNick?nickname=${nickname}`)
-        .then((res) => {
-        if (res.data.statusCode === 200) {
-          alert('사용 가능한 닉네임입니다.');
-          setCheckTF({ isAvailedNickname: true, isAvailedEmail: checkTF.isAvailedEmail });
-        } else {
-          alert('이미 존재하는 닉네임입니다.');
-          setCheckTF({ isAvailedNickname: false, isAvailedEmail: checkTF.isAvailedEmail });
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    } else {
-      alert('닉네임을 입력해주세요.');
-    }
-  };
 
   const postConfig = {
     onComplete: (data) => {
@@ -177,7 +170,7 @@ const Signup = () => {
                 message: '닉네임은 영문, 숫자 또는 한글로 2자 이상 16자 이하만 가능합니다.'
               }
             })}
-          />
+          onChange={handleNickChange}/>
           <button type="button" onClick={checkNickname} disabled={!!errors.nickname}>중복확인</button><br />
           {errors.nickname && errors.nickname?.type === 'pattern' && (
             <ErrorMessage error={errors.nickname} />
