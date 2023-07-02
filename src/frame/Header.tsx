@@ -16,6 +16,7 @@ import {Link} from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {useEffect} from 'react';
 import api from 'lib/api';
+import Cookies from 'js-cookie';
 
 const pages = [
     {text: '반려일지', href: '/todo'},
@@ -38,6 +39,16 @@ function Header({isLoggedIn}) {
       console.log("res.data "+res.data.data.petUrl)
       setPetImg(res.data.data.petUrl);
     }).catch((error)=>{
+      api.post("member/reissue")
+      .then((res) => {
+              console.log("accesstoken"+ res.data.data);
+              Cookies.set ("key", res.data.data);
+              alert('토큰 재발급 성공');
+      })
+      .catch((err) => {
+          alert('토큰 재발급 실패');
+          console.log(err.message)
+      })
       console.log(error.message)
     })
   }
@@ -45,8 +56,9 @@ function Header({isLoggedIn}) {
 
   const settings = isLoggedIn
   ? [
-      { label: "마이 페이지", href: "/my-page" },
+      { label: "마이 페이지", href: "/member/mypage" },
       { label: "펫 등록", href: "/pet/petform" },
+      { label: "펫 수정", href: "/pet/edit" },
       { label: "로그아웃", href: "/member/logout" }
     ]
   : [{ label: "로그인", href: "/member/login" },
