@@ -3,7 +3,6 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { ErrorMessage } from "components/member/Signup";
-import Cookies from 'js-cookie';
 import api from "lib/api";
 import PetImgUpload from "./PetImgUpload";
 import { uploadS3 } from "lib/s3";
@@ -16,6 +15,7 @@ interface PetFormData {
     firstmet: string;
     file: File;
     petUrl: string
+    petId: number
 }
 
 //현재 날짜(파일명을 위한)
@@ -27,14 +27,18 @@ const hours = String(currentDate.getHours()).padStart(2, '0');
 const minutes = String(currentDate.getMinutes()).padStart(2, '0');
 
 
-export const PetForm = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm<PetFormData>({ mode: 'all' });
+export const PetEdit = () => {
+    const [petData, setPetData] = useState<PetFormData | null>(null);
+    const [formattedDate, setFormattedDate] = useState('');
+
+    const { register, handleSubmit, formState: { errors } } = useForm<PetFormData>({ mode: 'all',
+    defaultValues: petData
+ });
     const [imageFile, setImageFile] = useState<File | null>(null);
     const [fileName, setFileName] = useState<string | null>(null);
     const [fileType, setFileType] = useState<string | null>(null);
 
     const navigate = useNavigate();
-    const accessToken = Cookies.get('key');
 
     //input 창 숫자만 입력가능하도록
     const numberInput = (e: React.FormEvent<HTMLInputElement>) => {
@@ -60,9 +64,8 @@ export const PetForm = () => {
         console.log("peturl "+petUrl)
         data.petUrl = petUrl;
 
-        api.post("pet/petform", JSON.stringify(data))
+        api.put(`pet/edit/${petData.petId}`, JSON.stringify(data))
             .then((res) => {
-
                 alert("업로드 완료!");
                 navigate("/");
                 console.log(res.data);
@@ -75,17 +78,35 @@ export const PetForm = () => {
 
     }
 
+    useEffect(()=>{
+        getPetData()
+      },[])
+      
+      //펫 정보 받아오는 함수
+    const getPetData= () => {
+        api.get("pet/petinfo")
+        .then((res)=>{
+            const petData: PetFormData = {
+                ...res.data.data
+            }
+            setPetData(petData);
+            setFormattedDate(new Date(petData.firstmet).toISOString().split('T')[0]);
 
+            }).catch((error)=>{
+
+          console.log(error.message)
+        })
+      }
 
     return (
         <>
+        {petData ?
             <div className="petform">
                 <form onSubmit={handleSubmit(handleFormSubmit)} className="PetForm">
-                    <h1>펫 등록</h1><br />
-                    <PetImgUpload setImageFile={setImageFile} setFilename={setFileName} setFileType={setFileType} nowProfile={null}/>
-
+                    <h1>펫 수정</h1><br />
+                    <PetImgUpload setImageFile={setImageFile} setFilename={setFileName} setFileType={setFileType} nowProfile={petData.petUrl}/>
                     펫 이름 :
-                    <input type="text"
+                    <input type="text" defaultValue ={petData.petname}
                         {...register("petname", {
                             required: {
                                 value: true,
@@ -101,7 +122,7 @@ export const PetForm = () => {
                     )}
 
                     나이 :
-                    <input type="text" onInput={numberInput}
+                    <input type="text" onInput={numberInput} defaultValue={petData.age}
                         {...register("age", {
                             required: {
                                 value: true,
@@ -115,7 +136,7 @@ export const PetForm = () => {
                     )}
 
                     펫 종류 :
-                    <input type="text"
+                    <input type="text" defaultValue={petData.type}
                         {...register("type", {
                             required: {
                                 value: true,
@@ -130,7 +151,7 @@ export const PetForm = () => {
                     )}
 
                     몸무게 :
-                    <input type="text" onInput={numberInput}
+                    <input type="text" onInput={numberInput} defaultValue={petData.weight}
                         {...register("weight", {
                             required: {
                                 value: true,
@@ -143,7 +164,7 @@ export const PetForm = () => {
 
                     )}
 
-                    처음 만난 날:<input type="date"
+                    처음 만난 날:<input type="date" id="firstmet" defaultValue={formattedDate} 
                         {...register("firstmet", {
                             required: {
                                 value: true,
@@ -155,11 +176,12 @@ export const PetForm = () => {
 
                     )}<br />
                     <p>
-                        <button type="submit" >펫 등록</button>
+                        <button type="submit" >펫 수정</button>
                     </p><br />
 
                 </form>
             </div>
+: <></>}
         </>
     )
 
