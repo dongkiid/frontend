@@ -41,7 +41,7 @@ const Signup = () => {
 
 
   const handleFormSubmit = (data: FormData) => {
-    if (checkTF.isAvailedEmail === true && checkTF.isAvailedNickname === true) {
+    if (checkTF.isAvailedEmail === true && checkNick === true) {
         api.post("member/signup", JSON.stringify(data))
         .then((res) => {
           console.log(data);

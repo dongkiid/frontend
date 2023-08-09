@@ -1,6 +1,17 @@
 import { useState } from "react";
 import Cookies from 'js-cookie';
 import api from "lib/api";
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import Link from '@mui/material/Link';
+import Paper from '@mui/material/Paper';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
 
 const Login = () => {
 
@@ -23,9 +34,9 @@ const Login = () => {
         else {
             api.post("member/login", JSON.stringify(inputValue))
                 .then((res) => {
-                        //console.log(res.data);
-                        Cookies.set ("key", res.data.data.accessToken);
-                        alert('로그인 성공');
+                    //console.log(res.data);
+                    Cookies.set ("key", res.data.data.accessToken);
+                    alert('로그인 성공');
                     return window.location.replace('/');
                 })
                 .catch((err) => {
@@ -37,20 +48,89 @@ const Login = () => {
     return (
         <>
 
-            <div className="loginform">
-                <div className="title">
-                    <h1>로그인</h1>
-                </div>
-                <div className="email">
-                    이메일 : <input name="email" type="text" value={inputValue.email} onChange={onChangeHandler} /><br />
-                </div>
-                <div className="pw">
-                    비밀번호 : <input name="password" type="password" value={inputValue.password} onChange={onChangeHandler} /><br />
-                </div>
-                <div className="login">
-                    <p><button className="btn" onClick={handleSubmit}>로그인</button></p>
-                </div>
-            </div>
+            <Grid container component="main" sx={{ height: '100vh' }}>
+                <Grid
+                    item
+                    xs={false}
+                    sm={4}
+                    md={7}
+                    sx={{
+                        backgroundImage: 'url(https://source.unsplash.com/random/?pet)',
+                        backgroundRepeat: 'no-repeat',
+                        backgroundColor: (t) =>
+                            t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                    }}
+                />
+                <Grid item xs={12} sm={8} md={5} component={Paper} elevation={3} square>
+                    <Box
+                        sx={{
+                            my: 8,
+                            mx: 4,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                        }}
+                    >
+                        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                            <LockOutlinedIcon />
+                        </Avatar>
+                        <Typography component="h1" variant="h5">
+                            로그인
+                        </Typography>
+                        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+                            <TextField
+                                margin="normal"
+                                required
+                                fullWidth
+                                id="email"
+                                label="Email Address"
+                                name="email"
+                                autoComplete="email"
+                                autoFocus
+                                value={inputValue.email} onChange={onChangeHandler} 
+                            />
+
+                            <TextField
+                                margin="normal"
+                                required
+                                fullWidth
+                                name="password"
+                                label="Password"
+                                type="password"
+                                id="password"
+                                autoComplete="current-password"
+                                value={inputValue.password} onChange={onChangeHandler}
+                            />
+                            <FormControlLabel
+                                control={<Checkbox value="remember" color="primary" />}
+                                label="Remember me"
+                            />
+                            <Button
+                                fullWidth
+                                variant="contained"
+                                sx={{ mt: 3, mb: 2, color: 'white'}}
+                                onClick={handleSubmit}
+                            >
+                                Sign In
+                            </Button>
+                            <Grid container>
+                                <Grid item xs>
+                                    <Link href="#" variant="body2">
+                                        비밀번호 찾기
+                                    </Link>
+                                </Grid>
+                                <Grid item>
+                                    <Link href="#" variant="body2">
+                                        {"계정이 없으신가요? 회원가입"}
+                                    </Link>
+                                </Grid>
+                            </Grid>
+                        </Box>
+                    </Box>
+                </Grid>
+            </Grid>
 
         </>
     )

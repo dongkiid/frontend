@@ -11,14 +11,15 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
 import { Link } from 'react-router-dom';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useEffect } from 'react';
 import api from 'lib/api';
 import Cookies from 'js-cookie';
+import logo from '../styles/img/edit_logo2.png';
+import SearchBox from './header/SearchBox';
 
 const pages = [
+  { text: '홈', href: '/' },
   { text: '반려일지', href: '/todo' },
   { text: '우리동네', href: '/board' }
 ]
@@ -82,37 +83,29 @@ function Header({ isLoggedIn }) {
     setAnchorElUser(null);
   };
 
-  const theme = createTheme({
-    palette: {
-      primary: {
-        main: '#000000',
-      },
-    },
-  });
-
+ 
 
   return (
-    <ThemeProvider theme={theme}>
-      <AppBar position="static" sx={{ backgroundColor: 'transparent', boxShadow: 'none' }}>
+      <AppBar position="static" sx={{ backgroundColor: 'transparent', boxShadow: 'none', mx: 1, my:2}}>
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-            <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
             <Typography
               variant="h6"
               noWrap
               component="a"
               href="/"
               sx={{
-                mr: 2,
                 display: { xs: 'none', md: 'flex' },
-                fontFamily: 'monospace',
-                fontWeight: 700,
                 letterSpacing: '.3rem',
-                color: 'black',
                 textDecoration: 'none',
               }}
             >
-              펫구름
+            <Box
+              component="img"
+              sx={{ height: 60, mr: 6 }}
+              alt="Logo"
+              src={logo}
+            />
             </Typography>
 
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -124,7 +117,7 @@ function Header({ isLoggedIn }) {
                 onClick={handleOpenNavMenu}
                 color="primary"
               >
-                <MenuIcon />
+                <MenuIcon sx={{color:'#FFAE8B'}}/>
               </IconButton>
               <Menu
                 id="menu-appbar"
@@ -151,7 +144,6 @@ function Header({ isLoggedIn }) {
                 ))}
               </Menu>
             </Box>
-            <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
             <Typography
               variant="h5"
               noWrap
@@ -161,32 +153,47 @@ function Header({ isLoggedIn }) {
                 mr: 2,
                 display: { xs: 'flex', md: 'none' },
                 flexGrow: 1,
-                fontFamily: 'monospace',
-                fontWeight: 700,
                 letterSpacing: '.3rem',
-                color: 'black',
-                textDecoration: 'none',
               }}
-            >
-              펫구름
+            >             
+              <Box
+              component="img"
+              sx={{ height: 60 }}
+              alt="Logo"
+              src={logo}
+            />
             </Typography>
+
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
               {pages.map((page) => (
                 <Button
                   key={page.text}
                   onClick={handleCloseNavMenu}
                   href={page.href}
-                  sx={{ my: 2, color: 'black', display: 'block' }}
+                  sx={{ display: 'block',
+                  fontFamily:'SDSamliphopangche_Basic',
+                  fontSize:20,
+                  color:'#404040',
+                  textAlign:'center',
+                  '&:hover': {
+                    color: 'primary.main',
+                    backgroundColor:"transparent"
+                  }
+                  }}
                 >
                   {page.text}
                 </Button>
               ))}
             </Box>
 
+          <SearchBox/>
+
             <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open settings">
+              <Tooltip title="">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src={petImg} />
+                  <Avatar alt="Remy Sharp" src={petImg} 
+                    sx={{ width: 45, height: 45, backgroundColor:'#FFAE8B' }}
+                    />
                 </IconButton>
               </Tooltip>
               <Menu
@@ -215,7 +222,6 @@ function Header({ isLoggedIn }) {
           </Toolbar>
         </Container>
       </AppBar>
-    </ThemeProvider>
   );
 }
 
