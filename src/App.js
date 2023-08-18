@@ -11,6 +11,8 @@ import Logout from 'components/member/Logout';
 import PetFormPage from 'pages/PetFormPage';
 import PetEditPage from 'pages/PetEditPage';
 import MyPage from 'pages/MyPage';
+import BoardListPage from 'pages/BoardListPage';
+import BoardFormPage from 'pages/BoardFormPage';
 function App() {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -36,6 +38,8 @@ function App() {
         <Route path='/pet/petform' element={<PetFormPage/>}/>
         <Route path='/pet/edit' element={<PetEditPage/>}/>
         <Route path='/member/mypage' element={<MyPage/>}/>
+        <Route path='/board/boardlist' element={<BoardListPage/>}/>
+        <Route path='/board/boardform' element={<BoardFormPage/>}/>
       </Routes>
     </div>
     

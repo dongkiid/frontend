@@ -21,7 +21,7 @@ import SearchBox from './header/SearchBox';
 const pages = [
   { text: '홈', href: '/' },
   { text: '반려일지', href: '/todo' },
-  { text: '우리동네', href: '/board' }
+  { text: '우리동네', href: '/board/boardlist' }
 ]
 
 function Header({ isLoggedIn }) {
@@ -86,7 +86,7 @@ function Header({ isLoggedIn }) {
  
 
   return (
-      <AppBar position="static" sx={{ backgroundColor: 'transparent', boxShadow: 'none', mx: 0, my:2}}>
+      <AppBar position="static" sx={{ backgroundColor: 'transparent', boxShadow: 'none', my:2}}>
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             <Typography
