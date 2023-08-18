@@ -86,7 +86,7 @@ function Header({ isLoggedIn }) {
  
 
   return (
-      <AppBar position="static" sx={{ backgroundColor: 'transparent', boxShadow: 'none', mx: 1, my:2}}>
+      <AppBar position="static" sx={{ backgroundColor: 'transparent', boxShadow: 'none', mx: 0, my:2}}>
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             <Typography
