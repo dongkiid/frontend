@@ -1,9 +1,9 @@
-import BoardListAll from "components/board/BoardListAll";
+import BoardList from "components/board/BoardList";
 
 export default function BoardListPage() {
     return (
         <>
-            <BoardListAll/>
+            <BoardList/>
         </>
     )
 }

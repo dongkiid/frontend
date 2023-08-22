@@ -1,9 +1,9 @@
-import BoardForm from "components/board/BoardForm";
+import BoardDetail from "components/board/BoardDetail";
 
 export default function BoardFormPage() {
     return (
         <>
-            <BoardForm />
+            <BoardDetail />
         </>
     )
 }
