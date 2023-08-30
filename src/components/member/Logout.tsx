@@ -11,6 +11,7 @@ export default function Logout(){
             .then((res)=>{
                 Cookies.remove('key');
                 alert('로그아웃 성공!')
+                return window.location.replace('/');
             }).catch((e)=>{
                 console.log(e)
             })

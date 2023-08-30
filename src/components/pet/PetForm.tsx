@@ -64,8 +64,9 @@ export const PetForm = () => {
             .then((res) => {
 
                 alert("업로드 완료!");
-                navigate("/");
                 console.log(res.data);
+                return window.location.replace('/');
+
 
             }).catch((err) => {
                 console.log(err.message);

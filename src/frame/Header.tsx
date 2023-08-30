@@ -33,28 +33,27 @@ function Header({ isLoggedIn }) {
     handlePetUrl()
   }, [petImg])
 
-  //헤더 아바타에 들어갈 펫 이미지 
-  const handlePetUrl = () => {
-    if (Cookies.get("key")) {
-      api.get("pet/petinfo")
-        .then((res) => {
-          console.log("res.data " + res.data.data.petUrl)
-          setPetImg(res.data.data.petUrl);
-        }).catch((error) => {
-          api.post("member/reissue")
-            .then((res) => {
-              console.log("accesstoken" + res.data.data);
-              Cookies.set("key", res.data.data);
-              alert('토큰 재발급 성공');
-            })
-            .catch((err) => {
-              alert('토큰 재발급 실패');
-              console.log(err.message)
-            })
-          console.log(error.message)
-        })
+    //헤더 아바타에 들어갈 펫 이미지 
+    const handlePetUrl = () => {
+      if (Cookies.get("key")) {
+        api.get("pet/petinfo")
+          .then((res) => {
+            console.log("res.data " + res.data.data.petUrl)
+            setPetImg(res.data.data.petUrl);
+          }).catch((error) => {
+            api.post("member/reissue")
+              .then((res) => {
+                console.log("accesstoken" + res.data.data);
+                Cookies.set("key", res.data.data);
+                console.log('토큰 재발급 성공');
+              })
+              .catch((err) => {
+                console.log(err.message)
+              })
+            console.log(error.message)
+          })
+      }
     }
-  }
 
   const settings = isLoggedIn
     ? [
@@ -83,145 +82,146 @@ function Header({ isLoggedIn }) {
     setAnchorElUser(null);
   };
 
- 
+
 
   return (
-      <AppBar position="static" sx={{ backgroundColor: 'transparent', boxShadow: 'none', my:2}}>
-        <Container maxWidth="xl">
-          <Toolbar disableGutters>
-            <Typography
-              variant="h6"
-              noWrap
-              component="a"
-              href="/"
-              sx={{
-                display: { xs: 'none', md: 'flex' },
-                letterSpacing: '.3rem',
-                textDecoration: 'none',
-              }}
-            >
+    <AppBar position="static" sx={{ backgroundColor: 'transparent', boxShadow: 'none', my: 2 }}>
+      <Container maxWidth="xl">
+        <Toolbar disableGutters>
+          <Typography
+            variant="h6"
+            noWrap
+            component="a"
+            href="/"
+            sx={{
+              display: { xs: 'none', md: 'flex' },
+              letterSpacing: '.3rem',
+              textDecoration: 'none',
+            }}
+          >
             <Box
               component="img"
               sx={{ height: 60, mr: 6 }}
               alt="Logo"
               src={logo}
             />
-            </Typography>
+          </Typography>
 
-            <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-              <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleOpenNavMenu}
-                color="primary"
-              >
-                <MenuIcon sx={{color:'#FFAE8B'}}/>
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorElNav}
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'left',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'left',
-                }}
-                open={Boolean(anchorElNav)}
-                onClose={handleCloseNavMenu}
-                sx={{
-                  display: { xs: 'block', md: 'none' },
-                }}
-              >
-                {pages.map((page) => (
-                  <MenuItem key={page.text} onClick={handleCloseNavMenu} component={Link} to={page.href}>
-                    <Typography textAlign="center">{page.text}</Typography>
-                  </MenuItem>
-                ))}
-              </Menu>
-            </Box>
-            <Typography
-              variant="h5"
-              noWrap
-              component="a"
-              href="/"
-              sx={{
-                mr: 2,
-                display: { xs: 'flex', md: 'none' },
-                flexGrow: 1,
-                letterSpacing: '.3rem',
+          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleOpenNavMenu}
+              color="primary"
+            >
+              <MenuIcon sx={{ color: '#FFAE8B' }} />
+            </IconButton>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorElNav}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
               }}
-            >             
-              <Box
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+              }}
+              open={Boolean(anchorElNav)}
+              onClose={handleCloseNavMenu}
+              sx={{
+                display: { xs: 'block', md: 'none' },
+              }}
+            >
+              {pages.map((page) => (
+                <MenuItem key={page.text} onClick={handleCloseNavMenu} component={Link} to={page.href}>
+                  <Typography textAlign="center">{page.text}</Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
+          <Typography
+            variant="h5"
+            noWrap
+            component="a"
+            href="/"
+            sx={{
+              mr: 2,
+              display: { xs: 'flex', md: 'none' },
+              flexGrow: 1,
+              letterSpacing: '.3rem',
+            }}
+          >
+            <Box
               component="img"
               sx={{ height: 60 }}
               alt="Logo"
               src={logo}
             />
-            </Typography>
+          </Typography>
 
-            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-              {pages.map((page) => (
-                <Button
-                  key={page.text}
-                  onClick={handleCloseNavMenu}
-                  href={page.href}
-                  sx={{ display: 'block',
-                  fontFamily:'SDSamliphopangche_Basic',
-                  fontSize:20,
-                  color:'#404040',
-                  textAlign:'center',
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+            {pages.map((page) => (
+              <Button
+                key={page.text}
+                onClick={handleCloseNavMenu}
+                href={page.href}
+                sx={{
+                  display: 'block',
+                  fontFamily: 'SDSamliphopangche_Basic',
+                  fontSize: 20,
+                  color: '#404040',
+                  textAlign: 'center',
                   '&:hover': {
                     color: 'primary.main',
-                    backgroundColor:"transparent"
+                    backgroundColor: "transparent"
                   }
-                  }}
-                >
-                  {page.text}
-                </Button>
-              ))}
-            </Box>
-
-          <SearchBox/>
-
-            <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src={petImg} 
-                    sx={{ width: 45, height: 45, backgroundColor:'#FFAE8B' }}
-                    />
-                </IconButton>
-              </Tooltip>
-              <Menu
-                sx={{ mt: '45px' }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
                 }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
               >
-                {settings.map((setting) => (
-                  <MenuItem key={setting.label} component={Link} to={setting.href} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{setting.label}</Typography>
-                  </MenuItem>
-                ))}
-              </Menu>
-            </Box>
-          </Toolbar>
-        </Container>
-      </AppBar>
+                {page.text}
+              </Button>
+            ))}
+          </Box>
+
+          <SearchBox />
+
+          <Box sx={{ flexGrow: 0 }}>
+            <Tooltip title="">
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                <Avatar alt="Remy Sharp" src={petImg}
+                  sx={{ width: 45, height: 45, backgroundColor: '#FFAE8B' }}
+                />
+              </IconButton>
+            </Tooltip>
+            <Menu
+              sx={{ mt: '45px' }}
+              id="menu-appbar"
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
+            >
+              {settings.map((setting) => (
+                <MenuItem key={setting.label} component={Link} to={setting.href} onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center">{setting.label}</Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
+        </Toolbar>
+      </Container>
+    </AppBar>
   );
 }
 
