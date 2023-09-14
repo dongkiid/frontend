@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
-import { Link, useParams,useNavigate } from 'react-router-dom';
+import { Link, useParams,useNavigate} from 'react-router-dom';
 import boardResponseDto from 'dto/boardResponseDto';
 import api from 'lib/api';
 import Cookies from 'js-cookie';
@@ -9,7 +9,8 @@ import { Button, TableContainer, Table, TableBody, TableCell, TableRow, Paper, T
 function BoardDetail(): JSX.Element {
   const [board, setBoard] = useState<boardResponseDto | null>();
   const { boardId } = useParams();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
 
   const fetchBoard = async () => {
     try {
@@ -33,13 +34,18 @@ function BoardDetail(): JSX.Element {
       alert('게시글이 삭제되었습니다.');
     } else {
       alert(`${response.data.message}`);
-      navigate(`/board`)
+      navigate(-1); // 이전 페이지로 이동 (수정 폼 들어갔다가 나와서 목록으로 나가려는 사람들에 대한 예외처리 필요)
     }
+  };
+
+  const goBackToList = () => {
+    navigate(-1); // 이전 페이지로 이동
   };
 
   useEffect(() => {
     fetchBoard();
-  }, []);
+  }, [board]);
+
 
   return (
     <div>
@@ -72,8 +78,7 @@ function BoardDetail(): JSX.Element {
       ) : (
         <div>Loading...</div>
       )}
-
-      <Button component={Link} to={`/board`} variant="contained">
+      <Button variant="contained" onClick={goBackToList}> 
         목록으로 돌아가기
       </Button>
     </div>

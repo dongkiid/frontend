@@ -25,6 +25,7 @@ function ModifyBoard(): JSX.Element {
       console.error('게시물을 가져오는 중 오류 발생:', error);
     }
   };
+  console.log(boardData)
 
   useEffect(() => {
     fetchBoard();
@@ -65,7 +66,8 @@ function ModifyBoard(): JSX.Element {
   };
 
   const handleGoback = (event) => {
-    navigate(`/board/${boardId}`)
+    navigate(-2) //개선 해야함
+
   }
 
   return (
@@ -82,9 +84,9 @@ function ModifyBoard(): JSX.Element {
         <FormControl sx={{ minWidth: 120 }} size="small">
           <Select labelId="demo-select-small-label" id="demo-select-small" name="category" value={boardData.category} onChange={handleInputChange} displayEmpty inputProps={{ 'aria-label': 'Without label' }}>
             <MenuItem value="">카테고리 선택</MenuItem>
-            <MenuItem value="산책 모임">산책 모임</MenuItem>
-            <MenuItem value="동물 자랑">동물 자랑</MenuItem>
-            <MenuItem value="스팟 공유">스팟 공유</MenuItem>
+            <MenuItem value="walk-with">산책모임</MenuItem>
+            <MenuItem value="show-off">동물자랑</MenuItem>
+            <MenuItem value="sitter">시터공고</MenuItem>
           </Select>
         </FormControl>
       </TableCell>
@@ -104,6 +106,8 @@ function ModifyBoard(): JSX.Element {
     <TableRow>
       <TableCell>사진 첨부</TableCell>
       <TableCell align="center">
+      {boardData.image !== '' && <div style={{ display: 'flex', justifyContent: 'center', margin: '10px 0' }}>
+                    <img src={boardData.image} alt={`${boardData.title}`} style={{ maxWidth: '100%' }} /></div>}
         <BoardImageUploader onImageUpload={handleImageUpload}/>
       </TableCell>
     </TableRow>

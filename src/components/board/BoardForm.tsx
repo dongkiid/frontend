@@ -49,9 +49,9 @@ export default function BoardForm() {
                                     displayEmpty
                                     inputProps={{ 'aria-label': 'Without label' }}
                                 >
-                                    <MenuItem value={10}>산책가요</MenuItem>
-                                    <MenuItem value={20}>동물자랑</MenuItem>
-                                    <MenuItem value={30}>시터공고</MenuItem>
+                                    <MenuItem value={"walk-with"}>산책가요</MenuItem>
+                                    <MenuItem value={"show-off"}>동물자랑</MenuItem>
+                                    <MenuItem value={"sitter"}>시터공고</MenuItem>
                                 </Select>
                             </FormControl>
                         </TableCell>

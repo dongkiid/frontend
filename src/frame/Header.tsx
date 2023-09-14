@@ -21,7 +21,8 @@ import SearchBox from './header/SearchBox';
 const pages = [
   { text: '홈', href: '/' },
   { text: '반려일지', href: '/todo' },
-  { text: '우리동네', href: '/board' }
+  { text: '우리동네', href: '/board/list/all' }
+
 ]
 
 function Header({ isLoggedIn }) {
