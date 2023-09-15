@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import dayjs, { Dayjs } from 'dayjs';
 import styled from 'styled-components';
 import TodoList from 'components/todo/Todolist';
@@ -32,6 +33,11 @@ export default function Todo() {
   }
 
   return (
+    <>
+    <Helmet>
+        <title> 반려일지 | 펫구름 </title>
+    </Helmet>
+
     <TodoContainer>
       <CalendarContainer>
         <Calendar onSelectDate={handleDateSelect} />
@@ -40,5 +46,6 @@ export default function Todo() {
         <TodoList selectedDate={selectedDate} />
       </TodoListContainer>
     </TodoContainer>
+    </>
   );
 }
