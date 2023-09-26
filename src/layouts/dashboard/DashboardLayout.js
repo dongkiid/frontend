@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 // @mui
 import { styled } from '@mui/material/styles';
 //
 import Header from './header';
 import Nav from './nav';
+import Cookies from 'js-cookie';
 
 // ----------------------------------------------------------------------
 
@@ -33,11 +34,22 @@ const Main = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function DashboardLayout() {
-  const [open, setOpen] = useState(false);
 
+  const [open, setOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    if (Cookies.get('key')) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, []);
+
+  
   return (
     <StyledRoot>
-      <Header onOpenNav={() => setOpen(true)} />
+      <Header isLoggedIn={isLoggedIn} onOpenNav={() => setOpen(true)} /> 
 
       <Nav openNav={open} onCloseNav={() => setOpen(false)} />
 

@@ -1,31 +1,19 @@
-import { useState } from 'react';
+import { useState, React, useEffect } from 'react';
 // @mui
 import { alpha } from '@mui/material/styles';
 import { Box, Divider, Typography, Stack, MenuItem, Avatar, IconButton, Popover } from '@mui/material';
 // mocks_
 import account from '../../../_mock/account';
+import Cookies from 'js-cookie';
+import api from 'lib/api';
+import { Link } from 'react-router-dom';
 
-// -----프로필 이미지-----------------------------------------------------------------
-
-const MENU_OPTIONS = [
-  {
-    label: 'Home',
-    icon: 'eva:home-fill',
-  },
-  {
-    label: 'Profile',
-    icon: 'eva:person-fill',
-  },
-  {
-    label: 'Settings',
-    icon: 'eva:settings-2-fill',
-  },
-];
 
 // ----------------------------------------------------------------------
 
-export default function AccountPopover() {
-  const [open, setOpen] = useState(null);
+export default function AccountPopover({ isLoggedIn }) {
+
+   const [open, setOpen] = useState(null);
 
   const handleOpen = (event) => {
     setOpen(event.currentTarget);
@@ -34,6 +22,50 @@ export default function AccountPopover() {
   const handleClose = () => {
     setOpen(null);
   };
+
+  const [petImg, setPetImg] = useState(null);
+
+  useEffect(() => {
+    handlePetUrl()
+  }, [petImg])
+
+  const settings = isLoggedIn
+  ? [
+    { label: "마이 페이지", href: "/member/mypage" },
+    { label: "펫 등록", href: "/pet/petform" },
+    { label: "펫 수정", href: "/pet/edit" },
+    { label: "로그아웃", href: "/logout" }
+  ]
+  : [{ label: "로그인", href: "/login" },
+  { label: "회원가입", href: "/signup" }
+  ];
+  
+
+  //헤더 아바타에 들어갈 펫 이미지 
+  const handlePetUrl = () => {
+    if (Cookies.get("key")) {
+      api.get("pet/petinfo")
+        .then((res) => {
+          console.log("res.data " + res.data.data.petUrl)
+          setPetImg(res.data.data.petUrl);
+        }).catch((error) => {
+          api.post("member/reissue")
+            .then((res) => {
+              console.log("accesstoken" + res.data.data);
+              Cookies.set("key", res.data.data);
+              alert('토큰 재발급 성공');
+            })
+            .catch((err) => {
+              alert('토큰 재발급 실패');
+              console.log(err.message)
+            })
+          console.log(error.message)
+        })
+    }
+  }
+  console.log("isLoggedIn"+isLoggedIn)
+
+
 
   return (
     <>
@@ -49,12 +81,12 @@ export default function AccountPopover() {
               height: '100%',
               borderRadius: '50%',
               position: 'absolute',
-              bgcolor: (theme) => alpha(theme.palette.grey[900], 0.8),
+              bgcolor: (theme) => alpha(theme.palette.grey[900], 0.2),
             },
           }),
         }}
       >
-        <Avatar src={account.photoURL} alt="photoURL" />
+        <Avatar alt="Remy Sharp" src={petImg} sx={{backgroundColor:'#FFAE8B' }}/>
       </IconButton>
 
       <Popover
@@ -88,8 +120,8 @@ export default function AccountPopover() {
         <Divider sx={{ borderStyle: 'dashed' }} />
 
         <Stack sx={{ p: 1 }}>
-          {MENU_OPTIONS.map((option) => (
-            <MenuItem key={option.label} onClick={handleClose}>
+          {settings.map((option) => (
+            <MenuItem key={option.label} component={Link} to={option.href} onClick={handleClose}>
               {option.label}
             </MenuItem>
           ))}
@@ -97,9 +129,6 @@ export default function AccountPopover() {
 
         <Divider sx={{ borderStyle: 'dashed' }} />
 
-        <MenuItem onClick={handleClose} sx={{ m: 1 }}>
-          Logout
-        </MenuItem>
       </Popover>
     </>
   );

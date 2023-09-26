@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import { Divider, Button, Select, MenuItem } from '@mui/material';
 import Paging from './Paging';
 import './styles/ListStyle.css';
+import SearchBar from './SeachBar';
 
 function BoardList(): JSX.Element {
   const [boardList, setBoardList] = useState<boardResponseDto[] | null>(null);
@@ -16,16 +17,24 @@ function BoardList(): JSX.Element {
   const [currentPage, setCurrentPage] = useState<number>(0);
   const { category } = useParams();
   const [selectedCategory, setSelectedCategory] = useState(category || '전체');
+
+  const [keyword, setKeyword] = useState<string>('')
+  const [search, setSearch] = useState<string>('')
+
   const navigate = useNavigate();
 
   const fetchBoardList = async (page) => {
     try {
-      console.log(`http://localhost:7777/api/board/page?page=${page}&category=${selectedCategory}`)
-      const response = await api.get(`http://localhost:7777/api/board/page?page=${page}&category=${selectedCategory}`);
+      console.log(`http://localhost:7777/api/board/page?page=${page}&category=${selectedCategory}&keyword=${keyword}&search=${search}`)
+
+      const response = await api.get(`http://localhost:7777/api/board/page?page=${page}&category=${selectedCategory}&keyword=${keyword}&search=${search}`);
+
       const data = response.data;
+
       setStatus(data.statusCode)
       setBoardList(data.data.content);
       setTotalPages(data.data.totalPages);
+
     } catch (error) {
       console.error('게시물 목록을 가져오는 중 오류 발생:', error);
     }
@@ -45,7 +54,7 @@ function BoardList(): JSX.Element {
   useEffect(() => {
     // When the component mounts or the category changes, fetch the board list
     fetchBoardList(currentPage);
-  }, [currentPage, selectedCategory,status]);
+  }, [currentPage, selectedCategory, status, keyword, search]);
 
   useEffect(() => {
     setSelectedCategory(category || '전체');
@@ -70,9 +79,9 @@ function BoardList(): JSX.Element {
       <div
         style={{
           display: 'flex',
-          justifyContent: 'space-between', 
+          justifyContent: 'space-between',
           alignItems: 'center',
-          padding: '0 1rem', 
+          padding: '0 1rem',
         }}
       >
         <Select
@@ -92,7 +101,7 @@ function BoardList(): JSX.Element {
           <Link to={`/board/create`}>글쓰기</Link>
         </Button>
       </div>
-      {boardList === null || status === 204? (
+      {boardList === null || status === 204 ? (
         <div className="crying-image-container">
           <img
             src="https://bys-petgoorm.s3.ap-northeast-2.amazonaws.com/pet-profile/202309112022_nbiuirc51.jpeg"
@@ -126,6 +135,7 @@ function BoardList(): JSX.Element {
             </TableBody>
           </Table>
           <Paging totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange} />
+          <SearchBar setSearch={setSearch} setKeyword={setKeyword} />
         </TableContainer>
       ) : (
         <CircularProgress />

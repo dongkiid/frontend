@@ -1,4 +1,4 @@
-// component
+// 왼쪽 메뉴바
 import SvgColor from '../../../components/svg-color';
 
 // ----------------------------------------------------------------------
@@ -19,6 +19,11 @@ const navConfig = [
   {
     title: '우리동네',
     path: '/board',
+    icon: icon('ic_board'),
+  },
+  {
+    title: '펫',
+    path: '/pet',
     icon: icon('ic_board'),
   },
   {
