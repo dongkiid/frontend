@@ -1,7 +1,6 @@
 import './App.css';
 import { Route, Routes } from 'react-router-dom';
 import Main from "./pages/Main";
-import Diary from "./pages/Todo";
 import SignUpPage from 'pages/SignUpPage';
 import LoginPage from 'pages/LoginPage';
 import Cookies from 'js-cookie';

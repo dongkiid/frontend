@@ -4,7 +4,6 @@ import DashboardLayout from './layouts/dashboard';
 import SimpleLayout from './layouts/simple';
 //
 import LoginPage from './pages/LoginPage';
-import TodoPage from './pages/Todo';
 import BoardListPage from './pages/BoardListPage';
 //import BoardFormPage from 'pages/BoardFormPage';
 import BoardCreateForm from './pages/BoardCreatePage'
@@ -40,7 +39,7 @@ export default function Router() {
       children: [
         { element: <Navigate to="/main" />, index: true },
         { path: 'main', element: <MainPage /> },
-        { path: 'todo', element: <TodoPage /> },
+        // { path: 'todo', element: <TodoPage /> },
       ],
     },
     {
