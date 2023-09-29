@@ -60,12 +60,12 @@ export default function BoardForm() {
   };
 
   const handleGoback = (event) => {
-    navigate(`/board/`)
+    navigate(-1)
   }
 
   return (
     <>
-      <Typography sx={{ width: '100%', typography: 'h4', display: 'flex', flexDirection: 'column', alignItems: 'center', fontFamily: "SDSamliphopangche_Basic", padding: 3, backgroundColor: '#FFAE8B' }}>
+      <Typography sx={{ width: '100%', typography: 'h3', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', fontFamily: "SDSamliphopangche_Basic", padding: 3}}>
         글 작성
       </Typography>
       <Divider />
@@ -73,7 +73,7 @@ export default function BoardForm() {
         <Table sx={{ minWidth: 200, width: 1000 }}>
           <TableRow>
             <TableCell>카테고리</TableCell>
-            <TableCell align="center">
+            <TableCell align="left">
               <FormControl sx={{ minWidth: 120 }} size="small">
                 <Select labelId="demo-select-small-label" id="demo-select-small" value={category} onChange={handleChange} displayEmpty inputProps={{ 'aria-label': 'Without label' }}>
                   <MenuItem value="">카테고리 선택</MenuItem>
@@ -98,7 +98,7 @@ export default function BoardForm() {
           </TableRow>
           <TableRow>
             <TableCell>사진 첨부</TableCell>
-            <TableCell align="center">
+            <TableCell align="left">
               <BoardImageUploader onImageUpload={handleImageUpload}/>
             </TableCell>
           </TableRow>

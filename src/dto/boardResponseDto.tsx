@@ -9,5 +9,6 @@ export default interface boardResponseDto {
     writerLocation: string;
     regdate: string;
     moddate: string;
+    clickCnt: number;
   };
 

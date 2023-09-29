@@ -65,7 +65,7 @@ function BoardList(): JSX.Element {
       <Typography
         sx={{
           width: '100%',
-          typography: 'h4',
+          typography: 'h3',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
@@ -97,7 +97,8 @@ function BoardList(): JSX.Element {
           <MenuItem value="show-off">동물자랑</MenuItem>
           <MenuItem value="sitter">시터공고</MenuItem>
         </Select>
-        <Button variant="contained" sx={{ color: 'white' }}>
+        <Button variant="contained" sx={{ mt: 3, mb: 2, mx: 0.5, color: 'white' }} >
+          
           <Link to={`/board/create`}>글쓰기</Link>
         </Button>
       </div>
@@ -111,14 +112,15 @@ function BoardList(): JSX.Element {
           <p className="text-overlay">게시물이 없어요!</p>
         </div>
       ) : boardList.length > 0 ? (
-        <TableContainer component={Paper}>
-          <Table className="board-table" aria-label="게시판 테이블">
-            <TableHead sx={{ backgroundColor: '#FFAE8B', color: '#FFFFF' }}>
+        <TableContainer component={Paper} >
+          <Table className="board-table" aria-label="게시판 테이블" >
+            <TableHead>
               <TableRow>
                 <TableCell>글번호</TableCell>
                 <TableCell>제목</TableCell>
                 <TableCell>작성자</TableCell>
                 <TableCell>등록일</TableCell>
+                <TableCell>조회수</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -130,6 +132,7 @@ function BoardList(): JSX.Element {
                   </TableCell>
                   <TableCell>{board.writerNickname}</TableCell>
                   <TableCell>{moment(board.moddate).format('YYYY-MM-DD HH:mm')}</TableCell>
+                  <TableCell>{board.clickCnt}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

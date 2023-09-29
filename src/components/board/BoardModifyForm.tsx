@@ -72,7 +72,7 @@ function ModifyBoard(): JSX.Element {
 
   return (
     <form onSubmit={handleSubmit}>
-      <Typography sx={{ width: '100%', typography: 'h4', display: 'flex', flexDirection: 'column', alignItems: 'center', fontFamily: "SDSamliphopangche_Basic", padding: 3, backgroundColor: '#FFAE8B'}}>
+      <Typography sx={{ width: '100%', typography: 'h3', display: 'flex', flexDirection: 'column', alignItems: 'center', fontFamily: "SDSamliphopangche_Basic", padding: 3}}>
         글 수정
       </Typography>
       <Divider />
@@ -80,7 +80,7 @@ function ModifyBoard(): JSX.Element {
   <Table sx={{ minWidth: 200, width: 1000 }}>
     <TableRow>
       <TableCell>카테고리</TableCell>
-      <TableCell align="center">
+      <TableCell align="left">
         <FormControl sx={{ minWidth: 120 }} size="small">
           <Select labelId="demo-select-small-label" id="demo-select-small" name="category" value={boardData.category} onChange={handleInputChange} displayEmpty inputProps={{ 'aria-label': 'Without label' }}>
             <MenuItem value="">카테고리 선택</MenuItem>
@@ -105,7 +105,7 @@ function ModifyBoard(): JSX.Element {
     </TableRow>
     <TableRow>
       <TableCell>사진 첨부</TableCell>
-      <TableCell align="center">
+      <TableCell align="left">
       {boardData.image !== '' && <div style={{ display: 'flex', justifyContent: 'center', margin: '10px 0' }}>
                     <img src={boardData.image} alt={`${boardData.title}`} style={{ maxWidth: '100%' }} /></div>}
         <BoardImageUploader onImageUpload={handleImageUpload}/>
