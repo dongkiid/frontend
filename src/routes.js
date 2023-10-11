@@ -19,6 +19,9 @@ import PetFormPage from './pages/PetFormPage';
 import MainPage from './pages/Main';
 import Logout from 'components/member/Logout';
 import SignUpPage from 'pages/SignUpPage';
+import EditNick from 'components/member/mypage/EditNick';
+import EditPw from 'components/member/mypage/EditPw';
+import PetEditPage from 'pages/PetEditPage';
 
 // ----------------------------------------------------------------------
 
@@ -65,10 +68,11 @@ export default function Router() {
       ],
     },
     {
-      path: '/petform',
+      path: '/pet',
       element: <DashboardLayout />,
       children: [
-        { element: <PetFormPage />, index: true },
+        { path: 'petform',element: <PetFormPage />},
+        { path: 'edit',element: <PetEditPage />},
       ],
     },
     {
@@ -81,6 +85,14 @@ export default function Router() {
         { path: 'modify/:boardId', element: <BoardModifyForm />},
         { path: 'list/:category', element: <BoardListPage /> },
       ],
+    },
+    {
+      path: '/member',
+      element: <DashboardLayout/>,
+      children: [
+        {element: <EditNick/>, path:'editNick' },
+        {element: <EditPw/>, path:'editPw' },
+      ]
     },
     {
       path: '*',

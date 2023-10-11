@@ -16,6 +16,7 @@ import NavSection from '../../../components/nav-section';
 import navConfig from './config';
 import Cookies from 'js-cookie';
 import api from '../../../lib/api';
+import NavList from './navList';
 
 // ----------------------------------------------------------------------
 
@@ -39,7 +40,7 @@ Nav.propTypes = {
 export default function Nav({ openNav, onCloseNav }) {
   const { pathname } = useLocation();
   const [petImg, setPetImg] = useState();
-
+  const [petName, setPetName] = useState();
   const isDesktop = useResponsive('up', 'lg');
 
   useEffect(() => {
@@ -60,6 +61,7 @@ export default function Nav({ openNav, onCloseNav }) {
           .then((res) => {
             console.log("res.data " + res.data.data.petUrl)
             setPetImg(res.data.data.petUrl);
+            setPetName(res.data.data.petname);
           }).catch((error) => {
             api.post("member/reissue")
               .then((res) => {
@@ -93,7 +95,7 @@ export default function Nav({ openNav, onCloseNav }) {
 
             <Box sx={{ ml: 2 }}>
               <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                {account.displayName}
+                {petName}
               </Typography>
 
               <Typography variant="body2" sx={{ color: 'text.secondary' }}>
@@ -104,8 +106,8 @@ export default function Nav({ openNav, onCloseNav }) {
         </Link>
       </Box>
 
-      <NavSection data={navConfig} />
-
+      {/* <NavSection data={navConfig} /> */}
+      <NavList/>
       <Box sx={{ flexGrow: 1 }} />
 
       <Box sx={{ px: 2.5, pb: 3, mt: 10 }}>

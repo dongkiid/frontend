@@ -45,6 +45,7 @@ function SearchBar({ setKeyword, setSearch }: AreaProps) {
         component="form"
         sx={{
           "& .MuiTextField-root": { m: 1, width: "13rem" },
+          display:'flex', alignItems:'center', justifyContent:'center'
         }}
         noValidate
         autoComplete="off"

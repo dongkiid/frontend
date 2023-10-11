@@ -7,7 +7,12 @@ import account from '../../../_mock/account';
 import Cookies from 'js-cookie';
 import api from 'lib/api';
 import { Link } from 'react-router-dom';
+import { atom, useRecoilState } from 'recoil';
 
+export const petState = atom({
+  key:'petImg',
+  default:''
+})
 
 // ----------------------------------------------------------------------
 
@@ -23,7 +28,9 @@ export default function AccountPopover({ isLoggedIn }) {
     setOpen(null);
   };
 
-  const [petImg, setPetImg] = useState(null);
+  const [petImg, setPetImg] = useRecoilState(petState);
+
+
 
   useEffect(() => {
     handlePetUrl()
@@ -53,7 +60,7 @@ export default function AccountPopover({ isLoggedIn }) {
             .then((res) => {
               console.log("accesstoken" + res.data.data);
               Cookies.set("key", res.data.data);
-              alert('토큰 재발급 성공');
+              //alert('토큰 재발급 성공');
             })
             .catch((err) => {
               alert('토큰 재발급 실패');

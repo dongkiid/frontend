@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Table, TableContainer, TableRow, TableCell, MenuItem, FormControl, Select, TextField, Typography, Box, Button, Divider} from '@mui/material';
+import { Table, TableContainer, TableRow, TableCell, MenuItem, FormControl, Select, TextField, Typography, Box, Button, Divider, Paper} from '@mui/material';
 import BoardImageUploader from 'components/board/boardImageUploader'
 import api from 'lib/api';
 import boardRequestDto from 'dto/boardRequestDto';
@@ -70,7 +70,7 @@ export default function BoardForm() {
       </Typography>
       <Divider />
       <TableContainer sx={{ display: 'flex', justifyContent: 'center', my: 8 }}>
-        <Table sx={{ minWidth: 200, width: 1000 }}>
+        <Table sx={{ minWidth: 200, width: 1000, backgroundColor:'white', border: '1px solid #DCDCDC', borderRadius: 5}}>
           <TableRow>
             <TableCell>카테고리</TableCell>
             <TableCell align="left">

@@ -5,7 +5,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import boardResponseDto from 'dto/boardResponseDto';
 import api from 'lib/api';
 import Typography from '@mui/material/Typography';
-import { Divider, Button, Select, MenuItem } from '@mui/material';
+import { Divider, Button, Select, MenuItem, Container } from '@mui/material';
 import Paging from './Paging';
 import './styles/ListStyle.css';
 import SearchBar from './SeachBar';
@@ -62,87 +62,90 @@ function BoardList(): JSX.Element {
 
   return (
     <>
-      <Typography
-        sx={{
-          width: '100%',
-          typography: 'h3',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          fontFamily: 'SDSamliphopangche_Basic',
-          padding: 3,
-        }}
-      >
-        우리 동네 게시판
-      </Typography>
-      <Divider />
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          padding: '0 1rem',
-        }}
-      >
-        <Select
-          labelId="select-category"
-          id="select-category"
-          value={selectedCategory}
-          onChange={handleCategoryChange}
-          displayEmpty
-          inputProps={{ 'aria-label': 'Without label' }}
+      <Container component="main" maxWidth="xl" >
+
+        <Typography
+          sx={{
+            width: '100%',
+            typography: 'h3',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            fontFamily: 'SDSamliphopangche_Basic',
+          }}
         >
-          <MenuItem value="all">전체</MenuItem>
-          <MenuItem value="walk-with">산책가요</MenuItem>
-          <MenuItem value="show-off">동물자랑</MenuItem>
-          <MenuItem value="sitter">시터공고</MenuItem>
-        </Select>
-        <Button variant="contained" sx={{ mt: 3, mb: 2, mx: 0.5, color: 'white' }} >
-          
-          <Link to={`/board/create`}>글쓰기</Link>
-        </Button>
-      </div>
-      {boardList === null || status === 204 ? (
-        <div className="crying-image-container">
-          <img
-            src="https://bys-petgoorm.s3.ap-northeast-2.amazonaws.com/pet-profile/202309112022_nbiuirc51.jpeg"
-            alt="🥲"
-            className="crying-image"
-          />
-          <p className="text-overlay">게시물이 없어요!</p>
+          우리 동네 게시판
+        </Typography>
+        <Divider />
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            padding: '0 1rem',
+            
+          }}
+        >
+          <Select
+            labelId="select-category"
+            id="select-category"
+            value={selectedCategory}
+            onChange={handleCategoryChange}
+            displayEmpty
+            inputProps={{ 'aria-label': 'Without label' }}
+          >
+            <MenuItem value="all">전체</MenuItem>
+            <MenuItem value="walk-with">산책가요</MenuItem>
+            <MenuItem value="show-off">동물자랑</MenuItem>
+            <MenuItem value="sitter">시터공고</MenuItem>
+          </Select>
+          <Button variant="contained" sx={{ mt: 3, mb: 2, mx: 0.5, color: 'white' }} >
+
+            <Link to={`/board/create`}>글쓰기</Link>
+          </Button>
         </div>
-      ) : boardList.length > 0 ? (
-        <TableContainer component={Paper} >
-          <Table className="board-table" aria-label="게시판 테이블" >
-            <TableHead>
-              <TableRow>
-                <TableCell>글번호</TableCell>
-                <TableCell>제목</TableCell>
-                <TableCell>작성자</TableCell>
-                <TableCell>등록일</TableCell>
-                <TableCell>조회수</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {boardList.map((board) => (
-                <TableRow key={board.boardId}>
-                  <TableCell>{board.boardId}</TableCell>
-                  <TableCell component="th" scope="row" className="title">
-                    <Link to={`/board/${board.boardId}`}>{board.title}</Link>
-                  </TableCell>
-                  <TableCell>{board.writerNickname}</TableCell>
-                  <TableCell>{moment(board.moddate).format('YYYY-MM-DD HH:mm')}</TableCell>
-                  <TableCell>{board.clickCnt}</TableCell>
+        {boardList === null || status === 204 ? (
+          <div className="crying-image-container">
+            <img
+              src="https://bys-petgoorm.s3.ap-northeast-2.amazonaws.com/pet-profile/202309112022_nbiuirc51.jpeg"
+              alt="🥲"
+              className="crying-image"
+            />
+            <p className="text-overlay">게시물이 없어요!</p>
+          </div>
+        ) : boardList.length > 0 ? (
+          <TableContainer component={Paper} sx={{border: '1px solid #DCDCDC', borderRadius: 5}} >
+            <Table className="board-table" aria-label="게시판 테이블" >
+              <TableHead>
+                <TableRow>
+                  <TableCell>글번호</TableCell>
+                  <TableCell>제목</TableCell>
+                  <TableCell>작성자</TableCell>
+                  <TableCell>등록일</TableCell>
+                  <TableCell>조회수</TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-          <Paging totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange} />
-          <SearchBar setSearch={setSearch} setKeyword={setKeyword} />
-        </TableContainer>
-      ) : (
-        <CircularProgress />
-      )}
+              </TableHead>
+              <TableBody>
+                {boardList.map((board) => (
+                  <TableRow key={board.boardId}>
+                    <TableCell>{board.boardId}</TableCell>
+                    <TableCell component="th" scope="row" className="title">
+                      <Link to={`/board/${board.boardId}`}>{board.title}</Link>
+                    </TableCell>
+                    <TableCell>{board.writerNickname}</TableCell>
+                    <TableCell>{moment(board.moddate).format('YYYY-MM-DD HH:mm')}</TableCell>
+                    <TableCell>{board.clickCnt}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+            <Paging totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange} />
+            <SearchBar setSearch={setSearch} setKeyword={setKeyword} />
+          </TableContainer>
+        ) : (
+          <CircularProgress />
+        )}
+      </Container>
     </>
   );
 }

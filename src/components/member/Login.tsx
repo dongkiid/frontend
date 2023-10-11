@@ -1,7 +1,6 @@
 import { useState } from "react";
 import Cookies from 'js-cookie';
 import api from "lib/api";
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -10,8 +9,9 @@ import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
+import LogoImage from '../../styles/img/edit_logo2.png'
+import { Link as RouterLink } from 'react-router-dom';
 
 const Login = () => {
 
@@ -19,6 +19,7 @@ const Login = () => {
         email: '',
         password: ''
     });
+
 
     const onChangeHandler = (e) => {
         setInputValue((prevState) => {
@@ -35,7 +36,7 @@ const Login = () => {
             api.post("member/login", JSON.stringify(inputValue))
                 .then((res) => {
                     //console.log(res.data);
-                    Cookies.set ("key", res.data.data.accessToken);
+                    Cookies.set("key", res.data.data.accessToken);
                     alert('로그인 성공');
                     return window.location.replace('/');
                 })
@@ -73,9 +74,9 @@ const Login = () => {
                             alignItems: 'center',
                         }}
                     >
-                        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                            <LockOutlinedIcon />
-                        </Avatar>
+                        <Link to="/" component={RouterLink} sx={{ display: 'contents' }}>
+                            <Box component="img" src={LogoImage} sx={{ height: 80, marginBottom: 3 }} />
+                        </Link>
                         <Typography component="h1" variant="h5">
                             로그인
                         </Typography>
@@ -89,7 +90,7 @@ const Login = () => {
                                 name="email"
                                 autoComplete="email"
                                 autoFocus
-                                value={inputValue.email} onChange={onChangeHandler} 
+                                value={inputValue.email} onChange={onChangeHandler}
                             />
 
                             <TextField
@@ -110,7 +111,7 @@ const Login = () => {
                             <Button
                                 fullWidth
                                 variant="contained"
-                                sx={{ mt: 3, mb: 2, color: 'white'}}
+                                sx={{ mt: 3, mb: 2, color: 'white' }}
                                 onClick={handleSubmit}
                             >
                                 Sign In
@@ -122,7 +123,7 @@ const Login = () => {
                                     </Link>
                                 </Grid>
                                 <Grid item>
-                                    <Link href="#" variant="body2">
+                                    <Link href="http://localhost:3000/signup" variant="body2">
                                         {"계정이 없으신가요? 회원가입"}
                                     </Link>
                                 </Grid>

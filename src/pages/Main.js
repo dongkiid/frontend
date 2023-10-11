@@ -32,7 +32,6 @@ export default function DashboardAppPage() {
         </Typography>
 
         <Grid container spacing={3}>
-        <RecoilRoot>
           <Grid item xs={12} md={6} lg={4}>
             <Calendar/>
           </Grid>
@@ -40,7 +39,6 @@ export default function DashboardAppPage() {
           <Grid item xs={12} md={6} lg={8}>
             <Todofeed/>
           </Grid>
-        </RecoilRoot>
           
 
           <Grid item xs={12} md={6} lg={8}>

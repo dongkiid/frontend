@@ -1,11 +1,9 @@
-import React, { useRef, useState, useEffect } from "react";
-import axios from "axios";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import { ErrorMessage } from "components/member/Signup";
 import api from "lib/api";
 import PetImgUpload from "./PetImgUpload";
 import { uploadS3 } from "lib/s3";
+import { Container, Typography, Grid, TextField, Box, Link, Button, Card } from '@mui/material';
 
 interface PetFormData {
     petname: string;
@@ -38,13 +36,6 @@ export const PetEdit = () => {
     const [fileName, setFileName] = useState<string | null>(null);
     const [fileType, setFileType] = useState<string | null>(null);
 
-    const navigate = useNavigate();
-
-    //input 창 숫자만 입력가능하도록
-    const numberInput = (e: React.FormEvent<HTMLInputElement>) => {
-        e.currentTarget.value = e.currentTarget.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
-    }
-
     const handleFormSubmit = async (data: PetFormData) => {
         const formData = new FormData();
         const extension = fileName.split(".").pop(); // 파일 확장자 추출
@@ -67,7 +58,7 @@ export const PetEdit = () => {
         api.put(`pet/edit/${petData.petId}`, JSON.stringify(data))
             .then((res) => {
                 alert("업로드 완료!");
-                navigate("/");
+                window.location.replace("/");
                 console.log(res.data);
 
             }).catch((err) => {
@@ -101,86 +92,149 @@ export const PetEdit = () => {
     return (
         <>
         {petData ?
-            <div className="petform">
-                <form onSubmit={handleSubmit(handleFormSubmit)} className="PetForm">
-                    <h1>펫 수정</h1><br />
-                    <PetImgUpload setImageFile={setImageFile} setFilename={setFileName} setFileType={setFileType} nowProfile={petData.petUrl}/>
-                    펫 이름 :
-                    <input type="text" defaultValue ={petData.petname}
-                        {...register("petname", {
-                            required: {
-                                value: true,
-                                message: '반려 동물의 이름을 입력해주세요'
-                            },
-                            minLength: 2,
-                            maxLength: 20
-                        })}
-                    /><br />
-                    {errors.petname && errors.petname?.type === 'required' && (
-                        <ErrorMessage error={errors.petname} />
+            <>
+            <Container component="main" maxWidth="sm" sx={{ padding: 3 }}>
+                <Card
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        border: '1px solid #DCDCDC', borderRadius: 5,
+                        padding: 4, backgroundColor: 'white'
+                    }}
+                >
+                    <Typography variant="h4" sx={{ mb: 2 }}>
+                        펫 수정
+                    </Typography>
 
-                    )}
+                    <Box component="form" noValidate onSubmit={handleSubmit(handleFormSubmit)} sx={{ mt: 3 }}>
 
-                    나이 :
-                    <input type="text" onInput={numberInput} defaultValue={petData.age}
-                        {...register("age", {
-                            required: {
-                                value: true,
-                                message: '반려 동물의 나이를 입력해주세요.(숫자만 입력가능)'
-                            }
-                        })}
-                    /><br />
-                    {errors.age && errors.age?.type === 'required' && (
-                        <ErrorMessage error={errors.age} />
+                        <Grid container spacing={2}>
+                            <Grid item xs={12}>
+                                <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                                    <PetImgUpload setImageFile={setImageFile} setFilename={setFileName} setFileType={setFileType} nowProfile={null} />
+                                </Box>
+                            </Grid>
+                            <Grid item xs={2} sx={{ display: 'flex', alignItems: 'center' }}>
+                                <Typography sx={{ color: '#969696' }}>이름</Typography>
+                            </Grid>
+                            <Grid item xs={10}>
+                                <TextField type="text"
+                                    size="small"
+                                    hiddenLabel
+                                    fullWidth
+                                    defaultValue ={petData.petname}
+                                    {...register("petname", {
+                                        required: {
+                                            value: true,
+                                            message: '반려 동물의 이름을 입력해주세요'
+                                        },
+                                        minLength: 2,
+                                        maxLength: 20
+                                    })}
+                                    error={!!errors.petname}
+                                    helperText={errors.petname?.message}
+                                />
 
-                    )}
+                            </Grid>
+                            <Grid item xs={2} sx={{ display: 'flex', alignItems: 'center' }}>
+                                <Typography sx={{ color: '#969696' }}>나이</Typography>
+                            </Grid>
+                            <Grid item xs={10}>
+                                <TextField
+                                    size="small"
+                                    hiddenLabel
+                                    fullWidth
+                                    type="number"
+                                    defaultValue ={petData.age}
+                                    {...register("age", {
+                                        required: {
+                                            value: true,
+                                            message: '반려 동물의 나이를 입력해주세요.(숫자만 입력가능)'
+                                        },
+                                    })}
+                                    error={!!errors.age}
+                                    helperText={errors.age?.message}
+                                />
+                            </Grid>
 
-                    펫 종류 :
-                    <input type="text" defaultValue={petData.type}
-                        {...register("type", {
-                            required: {
-                                value: true,
-                                message: '반려 동물의 종을 입력해주세요'
-                            },
-                            minLength: 2,
-                            maxLength: 20
-                        })}
-                    /><br />
-                    {errors.type && errors.type?.type === 'required' && (
-                        <ErrorMessage error={errors.type} />
-                    )}
+                            <Grid item xs={2} sx={{ display: 'flex', alignItems: 'center' }}>
+                                <Typography sx={{ color: '#969696' }}>종류</Typography>
+                            </Grid>
+                            <Grid item xs={10}>
+                                <TextField
+                                    size="small"
+                                    hiddenLabel
+                                    fullWidth
+                                    type="text"
+                                    defaultValue ={petData.type}
+                                    {...register("type", {
+                                        required: {
+                                            value: true,
+                                            message: '반려 동물의 종을 입력해주세요'
+                                        },
+                                        minLength: 2,
+                                        maxLength: 20
+                                    })}
+                                    error={!!errors.type}
+                                    helperText={errors.type?.message}
+                                /></Grid>
 
-                    몸무게 :
-                    <input type="text" onInput={numberInput} defaultValue={petData.weight}
-                        {...register("weight", {
-                            required: {
-                                value: true,
-                                message: '반려 동물의 몸무게를 입력해주세요.(숫자만 입력가능)'
-                            }
-                        })}
-                    /><br />
-                    {errors.weight && errors.weight?.type === 'required' && (
-                        <ErrorMessage error={errors.weight} />
+                            <Grid item xs={2} sx={{ display: 'flex', alignItems: 'center' }}>
+                                <Typography sx={{ color: '#969696' }}>몸무게</Typography>
+                            </Grid>
+                            <Grid item xs={10}>
+                                <TextField
+                                    size="small"
+                                    hiddenLabel
+                                    fullWidth
+                                    type="number"
+                                    defaultValue ={petData.weight}
+                                    {...register("weight", {
+                                        required: {
+                                            value: true,
+                                            message: '반려 동물의 몸무게를 입력해주세요.(숫자만 입력가능)'
+                                        },
+                                    })}
+                                    error={!!errors.weight}
+                                    helperText={errors.weight?.message}
+                                />
+                            </Grid>
 
-                    )}
+                            <Grid item xs={3} sx={{ display: 'flex', alignItems: 'center' }}>
+                                <Typography sx={{ color: '#969696' }}>처음 만난 날</Typography>
+                            </Grid>
+                            <Grid item xs={9}>
+                                <TextField
+                                    size="small"
+                                    hiddenLabel
+                                    fullWidth
+                                    type="date"
+                                    defaultValue={formattedDate} 
+                                    {...register("firstmet", {
+                                        required: {
+                                            value: true,
+                                            message: '반려 동물과의 처음 만난 날을 입력해주세요'
+                                        }
+                                    })}
+                                    error={!!errors.firstmet}
+                                    helperText={errors.firstmet?.message}
 
-                    처음 만난 날:<input type="date" id="firstmet" defaultValue={formattedDate} 
-                        {...register("firstmet", {
-                            required: {
-                                value: true,
-                                message: '반려 동물과의 처음 만난 날을 입력해주세요'
-                            }
-                        })} /><br />
-                    {errors.firstmet && errors.firstmet?.type === 'required' && (
-                        <ErrorMessage error={errors.firstmet} />
+                                /></Grid>
 
-                    )}<br />
-                    <p>
-                        <button type="submit" >펫 수정</button>
-                    </p><br />
-
-                </form>
-            </div>
+                        </Grid>
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            sx={{ backgroundColor: '#FFAE8B', boxShadow: 'none', paddingY: 1, marginY: 3 }}
+                        >
+                            수정하기
+                        </Button>
+                    </Box>
+                </Card>
+            </Container>
+            </>
 : <></>}
         </>
     )

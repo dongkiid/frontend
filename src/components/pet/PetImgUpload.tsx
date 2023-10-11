@@ -1,14 +1,20 @@
-import React, { useRef, useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
+import React, { useState } from "react";
 import styled from 'styled-components';
+import { Avatar } from '@mui/material';
+import { IconButton } from '@mui/material';
+
+const Input = styled('input')({
+    display: 'none',
+});
+
 
 interface PetImgUploadProps {
     setImageFile: (file: File | null) => void;
     setFilename: (filename: string | null) => void;
     setFileType: (filename: string | null) => void;
     nowProfile: string | null
-  }
-  
+}
+
 
 export default function PetImgUpload({ setImageFile, setFilename, setFileType, nowProfile }: PetImgUploadProps) {
 
@@ -23,30 +29,25 @@ export default function PetImgUpload({ setImageFile, setFilename, setFileType, n
         setFileType(file.type)
         setImagePreview(URL.createObjectURL(file));
         // 파일 업로드 로직
-      };
+    };
 
     return (
         <div>
-            <label>프로필 이미지 추가</label>
-            <input type="file" id="profileImg" 
-                accept=".jpg, .png, .jpeg, .JPG, .PNG, .JPEG" onChange={onUpload}/>
-            {nowProfile ||imagePreview ? <ThumbnailContainer><PreviewPet src={imagePreview? imagePreview: nowProfile} /></ThumbnailContainer> : <div />}
             
+            <label htmlFor="icon-button-file">
+                <Input accept=".jpg, .png, .jpeg, .JPG, .PNG, .JPEG" id="icon-button-file" type="file" onChange={onUpload} />
+                <IconButton
+                    color="primary"
+                    aria-label="upload picture"
+                    component="span"
+                >
+                    <Avatar sx={{ width: 200, height: 200 }} src={imagePreview} />
+                </IconButton>
+            </label>
+
         </div>
     )
 
 }
 
-const PreviewPet = styled.img`
-    max-width: 100%;
-    max-height: 100%;
-`
-const ThumbnailContainer = styled.div`
-    width: 200px;
-    height: 200px;
-    border: 1px solid #ccc;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-`;
 
