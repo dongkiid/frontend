@@ -30,8 +30,6 @@ export default function AccountPopover({ isLoggedIn }) {
 
   const [petImg, setPetImg] = useRecoilState(petState);
 
-
-
   useEffect(() => {
     handlePetUrl()
   }, [petImg])
@@ -49,27 +47,12 @@ export default function AccountPopover({ isLoggedIn }) {
   
 
   //헤더 아바타에 들어갈 펫 이미지 
-  const handlePetUrl = () => {
+  const handlePetUrl = async () => {
     if (Cookies.get("key")) {
-      api.get("pet/petinfo")
-        .then((res) => {
-          console.log("res.data " + res.data.data.petUrl)
-          setPetImg(res.data.data.petUrl);
-        }).catch((error) => {
-          api.post("member/reissue")
-            .then((res) => {
-              console.log("accesstoken" + res.data.data);
-              Cookies.set("key", res.data.data);
-              //alert('토큰 재발급 성공');
-            })
-            .catch((err) => {
-              alert('토큰 재발급 실패');
-              console.log(err.message)
-            })
-          console.log(error.message)
-        })
-    }
+      const result = await api.get("pet/petinfo");
+      setPetImg(result.data.data.petUrl);
   }
+}
   console.log("isLoggedIn"+isLoggedIn)
 
 

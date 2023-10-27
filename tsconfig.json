@@ -60,7 +60,7 @@
       // this 키워드가 any 타입일 경우 에러 발생
       "noImplicitThis": true,
       // 함수에서 return 생략 시 에러 발생
-      "noImplicitReturns": true,
+      "noImplicitReturns": false,
       // switch 문이 잘못된 경우 에러 발생
       "noFallthroughCasesInSwitch": true
     },

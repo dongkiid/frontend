@@ -7,16 +7,21 @@ export default function Logout(){
 
     useEffect(() => {
         if (accessToken) {
-            api.post("member/logout", null)
-            .then((res)=>{
-                Cookies.remove('key');
-                alert('로그아웃 성공!')
-                return window.location.replace('/');
-            }).catch((e)=>{
-                console.log(e)
-            })
+            LogoutApi()
         } 
 
       }, [accessToken]);
     
+}
+
+export const LogoutApi = async() =>{
+    
+    try{
+        const result = await api.post('member/logout');
+        Cookies.remove('key')
+        alert('로그아웃 성공.')
+        return window.location.replace('/');
+      }catch(error){
+        console.log(error);
+      }
 }
