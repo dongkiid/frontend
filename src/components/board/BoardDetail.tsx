@@ -5,7 +5,7 @@ import boardResponseDto from 'dto/boardResponseDto';
 import api from 'lib/api';
 import Cookies from 'js-cookie';
 import { Button, TableContainer, Table, TableBody, TableCell, TableRow, Paper, Typography, Divider, Container, Box, Stack } from '@mui/material';
-import Reply from './Reply';
+import Reply from './reply/Reply';
 
 function BoardDetail(): JSX.Element {
   const [board, setBoard] = useState<boardResponseDto | null>();
