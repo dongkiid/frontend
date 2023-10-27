@@ -22,29 +22,19 @@ import SignUpPage from 'pages/SignUpPage';
 import EditNick from 'components/member/mypage/EditNick';
 import EditPw from 'components/member/mypage/EditPw';
 import PetEditPage from 'pages/PetEditPage';
+import DiaryPage from './pages/DiaryPage';
 
 // ----------------------------------------------------------------------
 
 export default function Router() {
   const routes = useRoutes([
     {
-      path: '/dashboard',
-      element: <DashboardLayout />,
-      children: [
-        { element: <Navigate to="/dashboard/app" />, index: true },
-        { path: 'app', element: <DashboardAppPage /> },
-        { path: 'user', element: <UserPage /> },
-        { path: 'products', element: <ProductsPage /> },
-        { path: 'blog', element: <BlogPage /> },
-      ],
-    },
-    {
       path: '/',
       element: <DashboardLayout />,
       children: [
         { element: <Navigate to="/main" />, index: true },
         { path: 'main', element: <MainPage /> },
-        // { path: 'todo', element: <TodoPage /> },
+        { path: 'petdiary', element: <DiaryPage /> },
       ],
     },
     {

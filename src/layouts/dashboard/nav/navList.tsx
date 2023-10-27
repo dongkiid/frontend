@@ -32,7 +32,7 @@ export default function NavList() {
             aria-labelledby="nested-list-subheader"
         >
             <CustomListItem href="/main" primaryText="메인" icon={<HomeOutlinedIcon />} />
-            <CustomListItem href="/main" primaryText="반려일지" icon={<PetsOutlinedIcon />} />
+            <CustomListItem href="/petdiary" primaryText="반려일지" icon={<PetsOutlinedIcon />} />
             <CustomListItem href="/board" primaryText="게시판" icon={<TextSnippetOutlinedIcon />} />
 
             <ListItemButton onClick={handleClick} sx={{ pl: 2 }}>
