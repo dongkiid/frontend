@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import api from 'axios';
+import api from "lib/api";
 
 const useNicknameChecker = (nickname:string) => {
   const [checkNick, setCheckNick] = useState(false);
