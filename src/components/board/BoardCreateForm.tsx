@@ -39,11 +39,11 @@ export default function BoardForm() {
     if (boardData.title === '' || boardData.content === '' || boardData.category === '') {
       alert('모든 항목을 입력해주세요.');
     } else {
-      const response = await api.post('http://localhost:7777/api/board/create', JSON.stringify(boardData));
+      const response = await api.post('/api/board/create', JSON.stringify(boardData));
       console.log(response);
       if (response.status === 200) {
         alert('게시글이 성공적으로 등록되었습니다.');
-        navigate(`/board/${response.data.data}`);
+        navigate(`/board/${response.data.data}?state=create`);
       } else {
         alert('게시글 등록에 실패하였습니다.');
       }

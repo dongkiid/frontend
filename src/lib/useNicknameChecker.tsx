@@ -6,7 +6,7 @@ const useNicknameChecker = (nickname:string) => {
 
   const checkNickname = () => {
     if (nickname && nickname.length > 0) {
-      api.get(`http://localhost:7777/member/checkNick?nickname=${nickname}`)
+      api.get(`/member/checkNick?nickname=${nickname}`)
         .then((res) => {
           if (res.data.statusCode === 200) {
             alert('사용 가능한 닉네임입니다.');

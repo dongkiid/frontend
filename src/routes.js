@@ -69,7 +69,7 @@ export default function Router() {
       path: '/board',
       element: <DashboardLayout />,
       children: [
-        { element: <Navigate to="/board/list/all" />, index: true },
+        { element: <Navigate to="/board/list/all?page=1" />, index: true },
         { path: ':boardId', element: <BoardDetail  /> },
         { path: 'create', element: <BoardCreateForm /> },
         { path: 'modify/:boardId', element: <BoardModifyForm />},

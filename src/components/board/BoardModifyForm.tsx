@@ -10,16 +10,11 @@ function ModifyBoard(): JSX.Element {
   const navigate = useNavigate();
   const { boardId } = useParams();
 
-  const [boardData, setBoardData] = useState<boardRequestDto>({
-    title: '',
-    content: '',
-    category: '',
-    image: '',
-  });
+  const [boardData, setBoardData] = useState<boardRequestDto | null>();
 
   const fetchBoard = async () => {
     try {
-      const response = await api.get(`http://localhost:7777/api/board/${boardId}`);
+      const response = await api.get(`/api/board/${boardId}`);
       setBoardData(response.data.data);
     } catch (error) {
       console.error('게시물을 가져오는 중 오류 발생:', error);
@@ -52,7 +47,7 @@ function ModifyBoard(): JSX.Element {
       alert('모든 항목을 입력해주세요.');
     } else {
       try {
-        const response = await api.put(`http://localhost:7777/api/board/edit/${boardId}`, JSON.stringify(boardData));
+        const response = await api.put(`/api/board/edit/${boardId}`, JSON.stringify(boardData));
         if (response.data.statusCode === 200) {
           alert('게시글이 성공적으로 수정되었습니다.');
           navigate(`/board/${response.data.data}`);

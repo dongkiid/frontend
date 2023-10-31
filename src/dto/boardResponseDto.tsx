@@ -7,8 +7,9 @@ export default interface boardResponseDto {
     image: string;
     writerNickname: string;
     writerLocation: string;
-    regdate: string;
-    moddate: string;
+    regdate: string | Date;
+    moddate: string | Date;
     clickCnt: number;
+    bcode: string;
   };
 

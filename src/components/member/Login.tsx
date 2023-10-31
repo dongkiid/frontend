@@ -123,7 +123,7 @@ const Login = () => {
                                     </Link>
                                 </Grid>
                                 <Grid item>
-                                    <Link href="http://localhost:3000/signup" variant="body2">
+                                    <Link href="/signup" variant="body2">
                                         {"계정이 없으신가요? 회원가입"}
                                     </Link>
                                 </Grid>
